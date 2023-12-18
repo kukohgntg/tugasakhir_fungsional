@@ -1,4 +1,5 @@
 import os
+import re
 
 # Pure Functions
 
@@ -165,7 +166,11 @@ def tambah_peminjam():
         print("\n[Buku tidak ditemukan. Pastikan judul buku sudah benar.]")
         return
 
-    tanggal = input_data("Tanggal Peminjaman : ")
+    # Validate and get a properly formatted date
+    tanggal = input_data("Tanggal Peminjaman (format: dd/mm/yyyy): ")
+    while not re.match(r'\d{2}/\d{2}/\d{4}', tanggal):
+        print("\n[Format tanggal tidak valid. Gunakan format dd/mm/yyyy.]")
+        tanggal = input_data("Tanggal Peminjaman (format: dd/mm/yyyy): ")
 
     # Add borrower information to the list
     peminjam_data.append(f"{nama},{judul},{tanggal}\n")
