@@ -1,11 +1,11 @@
-###Import Statements:
+**Import Statements:**
 1. Mengimpor modul os untuk berinteraksi dengan sistem operasi (misalnya, membersihkan layar konsol).
 2. Mengimpor modul re untuk ekspresi regular
 ```
 import os
 import re
 ```
-###Pure Functions (Fungsi Murni):
+**Pure Functions (Fungsi Murni):**
 1. bersihkan_layar(): Membersihkan layar konsol.
 ```
 def bersihkan_layar():
@@ -25,7 +25,7 @@ def tulis_data(nama_file, data):
     with open(nama_file, "w") as file:
         file.writelines(data)
 ```
-###Lambda Expressions (Ekspresi Lambda):
+**Lambda Expressions (Ekspresi Lambda):**
 1. tampilkan_menu(): Mengembalikan tuple dari cetakan pesan menu ke layar.
 ```
 def tampilkan_menu():
@@ -43,7 +43,7 @@ def tampilkan_menu():
         print("[9] Keluar"),
     )
 ```
-###Mapping Type (Dictionary):
+**Mapping Type (Dictionary):**
 1. aksi_menu: Sebuah kamus yang memetakan opsi menu ke fungsi atau aksi yang sesuai.
 ```
 aksi_menu = {
@@ -58,7 +58,7 @@ aksi_menu = {
     9: lambda: print("\n[Anda telah keluar dari program]"),
 }
 ```
-###List Comprehension (Pemahaman List):
+**List Comprehension (Pemahaman List):**
 1. tampil_buku(): Membaca file "daftarbuku.txt", mengurutkan isinya, dan mengembalikan daftar buku yang diformat.
 ```
 def tampil_buku():
@@ -66,7 +66,7 @@ def tampil_buku():
         f"\n{i}. {buku}" for i, buku in enumerate(sorted(baca_data("daftarbuku.txt")), start=1)
     ] if os.path.exists("daftarbuku.txt") else ["\n[Data tidak tersedia]"]
 ``` 
-###Iterator dan Generator:
+**Iterator dan Generator:**
 1. Tidak ada penggunaan iterator atau generator yang eksplisit dalam kode ini.
 ```
 def cari_buku(judul):
@@ -74,7 +74,7 @@ def cari_buku(judul):
         (hasil.split(",") for hasil in baca_data("daftarbuku.txt") if judul in hasil), None
     )
 ```
-###Higher Order Function (Fungsi Orde Tinggi):
+**Higher Order Function (Fungsi Orde Tinggi):**
 1. menu(): Membersihkan layar, menampilkan menu, dan mengambil input pengguna untuk pemilihan menu.
 ```
 def menu():
@@ -82,13 +82,13 @@ def menu():
     tampilkan_menu()
     return int(input("\nMasukkan kode menu yang ingin diakses : "))
 ```
-###Built-in Higher Order Functions (Fungsi Bawaan Orde Tinggi):
+**Built-in Higher Order Functions (Fungsi Bawaan Orde Tinggi):**
 1. proses_pilihan_menu(pilihan): Mengambil pilihan menu, mencari aksi yang sesuai, dan menjalankannya.
 ```
 def pilih_aksi_menu(pilihan):
     return aksi_menu.get(pilihan, lambda: print("\n[Kode yang anda masukkan tidak valid!]"))
 ```
-###Inner Function (Fungsi Dalam):
+**Inner Function (Fungsi Dalam):**
 1. perbarui_data_buku(data_buku, judul, judul_baru, penulis_baru, tahun_baru): Sebuah fungsi dalam yang digunakan untuk memperbarui data buku.
 ```
 def proses_pilihan_menu(pilihan):
@@ -97,15 +97,15 @@ def proses_pilihan_menu(pilihan):
         aksi()
     else:
         globals()[aksi]()
-```     
-###Closure
+```
+**Closure**
 1. urutkan_berdasarkan_tanggal(tanggal_str): Sebuah closure yang mengonversi string tanggal menjadi tuple untuk tujuan pengurutan.
 ```
 def urutkan_berdasarkan_tanggal(tanggal_str):
     hari, bulan, tahun = map(int, tanggal_str.split('/'))
     return tahun, bulan, hari
 ```
-###Decorators (Dekorator):
+**Decorators (Dekorator):**
 1. tampilkan_dan_kembali(fungsi): Sebuah dekorator yang membungkus fungsi, mencetak pesan, menunggu input pengguna, dan kembali ke menu utama.
 ```
 def tampilkan_dan_kembali(fungsi):
@@ -117,7 +117,7 @@ def tampilkan_dan_kembali(fungsi):
         return hasil
     return pembungkus
 ```
-###Applying Decorators (Penerapan Dekorator):
+**Applying Decorators (Penerapan Dekorator):**
 1. Dekorator diterapkan pada beberapa fungsi seperti daftarbuku(), caridata(), dll.
 ```
 @tampilkan_dan_kembali
@@ -126,7 +126,7 @@ def daftarbuku():
     for buku in buku_list:
         print(buku)
 ```
-###Main Program:
+**Main Program:**
 1. Sebuah loop tak terbatas yang secara berulang menampilkan menu, mengambil input pengguna, dan menjalankan aksi yang sesuai sampai pengguna memilih untuk keluar.
 ```
 if __name__ == "__main__":
