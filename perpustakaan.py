@@ -108,9 +108,9 @@ def input_data(message): return input_with_message(message)
 
 
 def tambah_data():
-    judul = input_data("Judul Buku	: ")
-    penulis = input_data("Penulis Buku	: ")
-    tahun = input_data("Tahun Terbit	: ")
+    judul = input_data("Judul Buku    : ")
+    penulis = input_data("Penulis Buku  : ")
+    tahun = input_data("Tahun Terbit  : ")
     bukadata = read_books_data()
     bukadata.append(f"{judul},{penulis},{tahun}\n")
     write_books_data(bukadata)
@@ -118,7 +118,7 @@ def tambah_data():
 
 
 def input_baru():
-    return input_title(), input_data("Masukkan data baru\nJudul Buku	: "), input_data("Penulis Buku	: "), input_data("Tahun Terbit	: ")
+    return input_title(), input_data("Masukkan data baru\nJudul Buku    : "), input_data("Penulis Buku  : "), input_data("Tahun Terbit  : ")
 
 # Inner Function
 
@@ -153,12 +153,24 @@ def display_peminjam():
 
 
 def tambah_peminjam():
-    nama = input_data("Nama		   : ")
-    judul = input_data("Judul Buku	   : ")
-    tanggal = input_data("Tanggal Peminjaman : ")
     peminjam_data = read_peminjam_data()
+
+    # Get borrower information
+    nama = input_data("Nama            : ")
+    judul = input_data("Judul Buku       : ")
+
+    # Check if the book exists in the list of available books
+    books_data = read_books_data()
+    if not any(judul in book for book in books_data):
+        print("\n[Buku tidak ditemukan. Pastikan judul buku sudah benar.]")
+        return
+
+    tanggal = input_data("Tanggal Peminjaman : ")
+
+    # Add borrower information to the list
     peminjam_data.append(f"{nama},{judul},{tanggal}\n")
     write_peminjam_data(peminjam_data)
+
     print("\n[Data Peminjam Berhasil Ditambahkan]")
 
 
