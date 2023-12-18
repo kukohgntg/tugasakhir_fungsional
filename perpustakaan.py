@@ -8,24 +8,14 @@ def clear_screen():
     os.system("CLS")
 
 
-def read_books_data():
-    with open("daftarbuku.txt", "r") as bukadata:
-        return bukadata.readlines()
+def read_data(file_name):
+    with open(file_name, "r") as file:
+        return file.readlines()
 
 
-def write_books_data(data):
-    with open("daftarbuku.txt", "w") as bukadata:
-        bukadata.writelines(data)
-
-
-def read_peminjam_data():
-    with open("daftarpeminjam.txt", "r") as bukadata:
-        return bukadata.readlines()
-
-
-def write_peminjam_data(data):
-    with open("daftarpeminjam.txt", "w") as bukadata:
-        bukadata.writelines(data)
+def write_data(file_name, data):
+    with open(file_name, "w") as file:
+        file.writelines(data)
 
 
 # Lambda Expressions
@@ -43,24 +33,32 @@ def print_menu(): return (
     print("[9] Keluar"),
 )
 
+
+# Mapping Type (Dictionary)
+menu_actions = {
+    1: "daftarbuku",
+    2: "caridata",
+    3: "tambahdata",
+    4: "ubahdata",
+    5: "hapusdata",
+    6: "daftarpeminjam",
+    7: "tambahpeminjam",
+    8: "hapuspeminjam",
+    9: lambda: print("\n[Anda telah keluar dari program]"),
+}
+
 # List Comprehension
 
 
-def display_books():
-    books_data = read_books_data()
-    sorted_books = sorted(books_data)
-    return [f"\n{i}. {book}" for i, book in enumerate(sorted_books, start=1)] if sorted_books else ["\n[Data tidak tersedia]"]
+def display_books(): return [
+    f"\n{i}. {book}" for i, book in enumerate(sorted(read_data("daftarbuku.txt")), start=1)
+] if os.path.exists("daftarbuku.txt") else ["\n[Data tidak tersedia]"]
 
 
-def search_book(title):
-    books_data = read_books_data()
-    results = [book for book in books_data if title in book]
-
-    if results:
-        result = results[0].split(",")
-        return result
-    else:
-        return None
+def search_book(title): return next(
+    (result.split(",")
+     for result in read_data("daftarbuku.txt") if title in result), None
+)
 
 # Iterator dan Generator
 
@@ -74,17 +72,6 @@ def menu():
 
 
 def select_menu_action(choice):
-    menu_actions = {
-        1: daftarbuku,
-        2: caridata,
-        3: tambahdata,
-        4: ubahdata,
-        5: hapusdata,
-        6: daftarpeminjam,
-        7: tambahpeminjam,
-        8: hapuspeminjam,
-        9: lambda: print("\n[Anda telah keluar dari program]"),
-    }
     return menu_actions.get(choice, lambda: print("\n[Kode yang anda masukkan tidak valid!]"))
 
 # Built-in Higher Order Functions
@@ -92,105 +79,23 @@ def select_menu_action(choice):
 
 def process_menu_choice(choice):
     action = select_menu_action(choice)
-    action()
-
-# Currying
-
-
-def input_with_message(message):
-    return input(message)
-
-
-def input_title(): return input_with_message(
-    "Masukkan judul buku yang ingin dicari : ")
-
-
-def input_data(message): return input_with_message(message)
-
-
-def tambah_data():
-    judul = input_data("Judul Buku    : ")
-    penulis = input_data("Penulis Buku  : ")
-    tahun = input_data("Tahun Terbit  : ")
-    bukadata = read_books_data()
-    bukadata.append(f"{judul},{penulis},{tahun}\n")
-    write_books_data(bukadata)
-    print("\n[Data Buku Berhasil Ditambahkan]")
-
-
-def input_baru():
-    return input_title(), input_data("Masukkan data baru\nJudul Buku    : "), input_data("Penulis Buku  : "), input_data("Tahun Terbit  : ")
+    if callable(action):
+        action()
+    else:
+        globals()[action]()
 
 # Inner Function
 
 
-def ubah_data():
-    def update_book_data(data_buku, title, judulbr, penulisbr, tahunbr):
-        return ",".join([judulbr, penulisbr, tahunbr + "\n"]) if data_buku.startswith(title) else data_buku
-
-    baru = input_title()
-    title, judulbr, penulisbr, tahunbr = input_baru()
-    bukadata = read_books_data()
-    bukadata = [update_book_data(
-        data_buku, title, judulbr, penulisbr, tahunbr) for data_buku in bukadata]
-    write_books_data(bukadata)
-    print("\n[Data Buku Berhasil Diubah]")
-
-
-def hapus_data():
-    str = input_title()
-    bukadata = read_books_data()
-    output = [hps for hps in bukadata if not hps.startswith(str)]
-    write_books_data(output)
-    print("\n[Data Buku Telah Terhapus]")
+def update_book_data(data_buku, title, judulbr, penulisbr, tahunbr):
+    return ",".join([judulbr, penulisbr, tahunbr + "\n"]) if data_buku.startswith(title) else data_buku
 
 # Closure
 
 
-def display_peminjam():
-    peminjam_data = read_peminjam_data()
-    # Sorting function for date in the format "dd/mm/yyyy"
-
-    def sort_by_date(date_str):
-        day, month, year = map(int, date_str.split('/'))
-        return year, month, day
-    sorted_peminjam = sorted(
-        peminjam_data, key=lambda peminjam: sort_by_date(peminjam.split(',')[2]))
-    return [f"\n{i}. {peminjam}" for i, peminjam in enumerate(sorted_peminjam, start=1)] if sorted_peminjam else ["\n[Data tidak tersedia]"]
-
-
-def tambah_peminjam():
-    peminjam_data = read_peminjam_data()
-
-    # Get borrower information
-    nama = input_data("Nama            : ")
-    judul = input_data("Judul Buku       : ")
-
-    # Check if the book exists in the list of available books
-    books_data = read_books_data()
-    if not any(judul in book for book in books_data):
-        print("\n[Buku tidak ditemukan. Pastikan judul buku sudah benar.]")
-        return
-
-    # Validate and get a properly formatted date
-    tanggal = input_data("Tanggal Peminjaman (format: dd/mm/yyyy): ")
-    while not re.match(r'\d{2}/\d{2}/\d{4}', tanggal):
-        print("\n[Format tanggal tidak valid. Gunakan format dd/mm/yyyy.]")
-        tanggal = input_data("Tanggal Peminjaman (format: dd/mm/yyyy): ")
-
-    # Add borrower information to the list
-    peminjam_data.append(f"{nama},{judul},{tanggal}\n")
-    write_peminjam_data(peminjam_data)
-
-    print("\n[Data Peminjam Berhasil Ditambahkan]")
-
-
-def hapus_peminjam():
-    str = input_data("Masukkan Nama Peminjam yang Ingin Dihapus : ")
-    peminjam_data = read_peminjam_data()
-    output = [hps for hps in peminjam_data if not hps.startswith(str)]
-    write_peminjam_data(output)
-    print("\n[Data Peminjam Telah Terhapus]")
+def sort_by_date(date_str):
+    day, month, year = map(int, date_str.split('/'))
+    return year, month, day
 
 # Decorators
 
@@ -216,7 +121,7 @@ def daftarbuku():
 
 @display_and_return
 def caridata():
-    title = input_title()
+    title = input("Masukkan judul buku yang ingin dicari : ")
     result = search_book(title)
 
     if result:
@@ -229,51 +134,86 @@ def caridata():
 
 @display_and_return
 def tambahdata():
-    tambah_data()
-    tmbhdata = input_data("\nIngin menambahkan buku lagi? (Ya/Tidak) : ")
-    if tmbhdata.lower() == "ya":
-        tambahdata()
+    judul = input("Judul Buku    : ")
+    penulis = input("Penulis Buku  : ")
+    tahun = input("Tahun Terbit  : ")
+    bukadata = read_data("daftarbuku.txt")
+    bukadata.append(f"{judul},{penulis},{tahun}\n")
+    write_data("daftarbuku.txt", bukadata)
+    print("\n[Data Buku Berhasil Ditambahkan]")
+
+
+def input_baru():
+    return input("Masukkan judul buku yang ingin diperbarui : "), input("Judul Buku    : "), input("Penulis Buku  : "), input("Tahun Terbit  : ")
+
+# Inner Function
 
 
 @display_and_return
 def ubahdata():
-    ubah_data()
-    ubhdata = input_data("\nIngin mengubah data buku lagi? (Ya/Tidak) : ")
-    if ubhdata.lower() == "ya":
-        ubahdata()
+    baru = input("Masukkan judul buku yang ingin diperbarui : ")
+    title, judulbr, penulisbr, tahunbr = input_baru()
+    bukadata = read_data("daftarbuku.txt")
+    bukadata = [update_book_data(
+        data_buku, title, judulbr, penulisbr, tahunbr) for data_buku in bukadata]
+    write_data("daftarbuku.txt", bukadata)
+    print("\n[Data Buku Berhasil Diubah]")
 
 
 @display_and_return
 def hapusdata():
-    hapus_data()
-    hpsdata = input_data("\nIngin menghapus data buku lagi? (Ya/Tidak) : ")
-    if hpsdata.lower() == "ya":
-        hapusdata()
+    str = input("Masukkan judul buku yang ingin dihapus : ")
+    bukadata = read_data("daftarbuku.txt")
+    output = [hps for hps in bukadata if not hps.startswith(str)]
+    write_data("daftarbuku.txt", output)
+    print("\n[Data Buku Telah Terhapus]")
 
 
 @display_and_return
 def daftarpeminjam():
-    peminjam_list = display_peminjam()
+    peminjam_data = read_data("daftarpeminjam.txt")
+    sorted_peminjam = sorted(
+        peminjam_data, key=lambda peminjam: sort_by_date(peminjam.split(',')[2]))
+    peminjam_list = [f"\n{i}. {peminjam}" for i, peminjam in enumerate(
+        sorted_peminjam, start=1)] if sorted_peminjam else ["\n[Data tidak tersedia]"]
     for peminjam in peminjam_list:
         print(peminjam)
 
 
 @display_and_return
 def tambahpeminjam():
-    tambah_peminjam()
-    tmbhpeminjam = input_data(
-        "\nIngin menambahkan data peminjam lagi? (Ya/Tidak) : ")
-    if tmbhpeminjam.lower() == "ya":
-        tambahpeminjam()
+    peminjam_data = read_data("daftarpeminjam.txt")
+
+    # Get borrower information
+    nama = input("Nama            : ")
+    judul = input("Judul Buku       : ")
+
+    # Check if the book exists in the list of available books
+    books_data = read_data("daftarbuku.txt")
+    if not any(judul in book for book in books_data):
+        print("\n[Buku tidak ditemukan. Pastikan judul buku sudah benar.]")
+        return
+
+    # Validate and get a properly formatted date
+    tanggal = input("Tanggal Peminjaman (format: dd/mm/yyyy): ")
+    while not re.match(r'\d{2}/\d{2}/\d{4}', tanggal):
+        print("\n[Format tanggal tidak valid. Gunakan format dd/mm/yyyy.]")
+        tanggal = input("Tanggal Peminjaman (format: dd/mm/yyyy): ")
+
+    # Add borrower information to the list
+    peminjam_data.append(f"{nama},{judul},{tanggal}\n")
+    write_data("daftarpeminjam.txt", peminjam_data)
+
+    print("\n[Data Peminjam Berhasil Ditambahkan]")
 
 
 @display_and_return
 def hapuspeminjam():
-    hapus_peminjam()
-    hpspeminjam = input_data(
-        "\nIngin menghapus data peminjam lagi? (Ya/Tidak) : ")
-    if hpspeminjam.lower() == "ya":
-        hapuspeminjam()
+    str = input("Masukkan Nama Peminjam yang Ingin Dihapus : ")
+    peminjam_data = read_data("daftarpeminjam.txt")
+    output = [hps for hps in peminjam_data if not hps.startswith(str)]
+    write_data("daftarpeminjam.txt", output)
+    print("\n[Data Peminjam Telah Terhapus]")
 
 
 # Main Program
