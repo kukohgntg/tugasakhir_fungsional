@@ -124,15 +124,14 @@ def input_baru():
 
 
 def ubah_data():
-    def update_book_data(title, judulbr, penulisbr, tahunbr):
-        return ",".join([judulbr, penulisbr, tahunbr + "\n"]) if title in data_buku else data_buku
+    def update_book_data(data_buku, title, judulbr, penulisbr, tahunbr):
+        return ",".join([judulbr, penulisbr, tahunbr + "\n"]) if data_buku.startswith(title) else data_buku
 
     baru = input_title()
     title, judulbr, penulisbr, tahunbr = input_baru()
     bukadata = read_books_data()
-    data_buku = [book for book in bukadata if title in book][0].split(",")
-    bukadata = [update_book_data(title, judulbr, penulisbr, tahunbr)
-                for data_buku in bukadata]
+    bukadata = [update_book_data(
+        data_buku, title, judulbr, penulisbr, tahunbr) for data_buku in bukadata]
     write_books_data(bukadata)
     print("\n[Data Buku Berhasil Diubah]")
 
