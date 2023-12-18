@@ -149,7 +149,13 @@ def hapus_data():
 
 def display_peminjam():
     peminjam_data = read_peminjam_data()
-    sorted_peminjam = sorted(peminjam_data)
+    # Sorting function for date in the format "dd/mm/yyyy"
+
+    def sort_by_date(date_str):
+        day, month, year = map(int, date_str.split('/'))
+        return year, month, day
+    sorted_peminjam = sorted(
+        peminjam_data, key=lambda peminjam: sort_by_date(peminjam.split(',')[2]))
     return [f"\n{i}. {peminjam}" for i, peminjam in enumerate(sorted_peminjam, start=1)] if sorted_peminjam else ["\n[Data tidak tersedia]"]
 
 
