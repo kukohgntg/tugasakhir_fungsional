@@ -20,7 +20,7 @@ def tulis_data(nama_file, data):
 
 # Lambda Expressions
 def tampilkan_menu(): return (
-    print("     SELAMAT DATANG DI PROGRAM PERDIG"),
+    print(" SELAMAT DATANG DI PROGRAM PERPUSTAKAAN"),
     print("\nPilih daftar menu untuk mengakses program :\n"),
     print("[1] Lihat Daftar Buku"),
     print("[2] Cari Buku"),
