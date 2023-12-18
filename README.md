@@ -9,8 +9,7 @@ import re
 1. bersihkan_layar(): Membersihkan layar konsol.
 ```
 def bersihkan_layar():
-    os.system("CLS")
-    
+    os.system("CLS")    
 ```
 2. baca_data(nama_file): Membaca data dari file dan mengembalikannya sebagai daftar baris.
 ```
