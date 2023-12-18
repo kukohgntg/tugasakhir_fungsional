@@ -53,7 +53,13 @@ def display_books():
 
 def search_book(title):
     books_data = read_books_data()
-    return [book for book in books_data if title in book]
+    results = [book for book in books_data if title in book]
+
+    if results:
+        result = results[0].split(",")
+        return result
+    else:
+        return None
 
 # Iterator dan Generator
 
@@ -190,10 +196,11 @@ def daftarbuku():
 def caridata():
     title = input_title()
     result = search_book(title)
+
     if result:
-        print(f"\nJudul Buku	: {result[0]}")
-        print(f"Penulis		: {result[1]}")
-        print(f"Tahun Terbit	: {result[2]}")
+        print(f"\nJudul Buku           : {result[0]}")
+        print(f"Penulis             : {result[1]}")
+        print(f"Tahun Terbit        : {result[2]}")
     else:
         print("\n[Data tidak ditemukan]")
 
