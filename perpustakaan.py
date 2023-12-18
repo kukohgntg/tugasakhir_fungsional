@@ -256,4 +256,7 @@ def hapuspeminjam():
 # Main Program
 if __name__ == "__main__":
     while True:
-        process_menu_choice(menu())
+        choice = menu()
+        if choice == 9:
+            break  # Exit the loop when the user chooses to exit
+        process_menu_choice(choice)
