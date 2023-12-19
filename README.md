@@ -89,94 +89,94 @@ Penjelasan singkat:
 
 10. **Built-in Higher Order Functions pada python:**
 
-```python
-def proses_pilihan_menu(pilihan):
-    aksi = pilih_aksi_menu(pilihan)
-    if callable(aksi):
-        aksi()
-    else:
-        globals()[aksi]()
-```
+    ```python
+    def proses_pilihan_menu(pilihan):
+        aksi = pilih_aksi_menu(pilihan)
+        if callable(aksi):
+            aksi()
+        else:
+            globals()[aksi]()
+    ```
 
-Penjelasan: `proses_pilihan_menu` menggunakan fungsi tingkat tinggi (`callable`) untuk memproses pilihan menu.
+    Penjelasan: `proses_pilihan_menu` menggunakan fungsi tingkat tinggi (`callable`) untuk memproses pilihan menu.
 
 11. **Map:**
 
-```python
-peminjam_terurut = sorted(
-    peminjam_data, key=lambda peminjam: urutkan_berdasarkan_tanggal(peminjam.split(',')[2]))
-```
+    ```python
+    peminjam_terurut = sorted(
+        peminjam_data, key=lambda peminjam: urutkan_berdasarkan_tanggal(peminjam.split(',')[2]))
+    ```
 
-Penjelasan: `sorted` dengan argumen `key` menggunakan fungsi `urutkan_berdasarkan_tanggal` sebagai pemetaan.
+    Penjelasan: `sorted` dengan argumen `key` menggunakan fungsi `urutkan_berdasarkan_tanggal` sebagai pemetaan.
 
 12. **Filter:**
 
-```python
-filtered_data = [hps for hps in peminjam_data if not (hps.startswith(nama) and judul in hps)]
-```
+    ```python
+    filtered_data = [hps for hps in peminjam_data if not (hps.startswith(nama) and judul in hps)]
+    ```
 
-Penjelasan: List comprehension digunakan untuk menyaring data peminjam berdasarkan kondisi tertentu.
+    Penjelasan: List comprehension digunakan untuk menyaring data peminjam berdasarkan kondisi tertentu.
 
 13. **Reduce:**
     Tidak ada contoh langsung dari fungsi `reduce` pada kode yang diberikan.
 
 14. **Currying:**
 
-```python
-def currying_ubah_data(data_buku):
-    def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
-        # ...
-    return ubah_data
-```
+    ```python
+    def currying_ubah_data(data_buku):
+        def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
+            # ...
+        return ubah_data
+    ```
 
-Penjelasan: `currying_ubah_data` adalah fungsi currying yang menghasilkan fungsi `ubah_data`.
+    Penjelasan: `currying_ubah_data` adalah fungsi currying yang menghasilkan fungsi `ubah_data`.
 
 15. **Inner Function:**
 
-```python
-def currying_ubah_data(data_buku):
-    def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
-        # ...
-    return ubah_data
-```
+    ```python
+    def currying_ubah_data(data_buku):
+        def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
+            # ...
+        return ubah_data
+    ```
 
-Penjelasan: `ubah_data` adalah fungsi inner yang didefinisikan di dalam fungsi `currying_ubah_data`.
+    Penjelasan: `ubah_data` adalah fungsi inner yang didefinisikan di dalam fungsi `currying_ubah_data`.
 
 16. **Ruang Lingkup Variabel:**
 
-```python
-def urutkan_berdasarkan_tanggal(tanggal_str):
-    hari, bulan, tahun = map(int, tanggal_str.split('/'))
-    return tahun, bulan, hari
-```
+    ```python
+    def urutkan_berdasarkan_tanggal(tanggal_str):
+        hari, bulan, tahun = map(int, tanggal_str.split('/'))
+        return tahun, bulan, hari
+    ```
 
-Penjelasan: Variabel `hari`, `bulan`, dan `tahun` di dalam fungsi memiliki ruang lingkup lokal.
+    Penjelasan: Variabel `hari`, `bulan`, dan `tahun` di dalam fungsi memiliki ruang lingkup lokal.
 
 17. **Closure:**
 
-```python
-def currying_ubah_data(data_buku):
-    def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
-        nonlocal data_buku
-        data_buku = [perbarui_data_buku(
-            data, judul, judul_baru, penulis_baru, tahun_baru) for data in data_buku]
-        tulis_data("daftarbuku.txt", data_buku)
-        print("\n[Data Buku Berhasil Diubah]")
-    return ubah_data
-```
+    ```python
+    def currying_ubah_data(data_buku):
+        def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
+            nonlocal data_buku
+            data_buku = [perbarui_data_buku(
+                data, judul, judul_baru, penulis_baru, tahun_baru) for data in data_buku]
+            tulis_data("daftarbuku.txt", data_buku)
+            print("\n[Data Buku Berhasil Diubah]")
+        return ubah_data
+    ```
 
-Penjelasan: Fungsi `ubah_data` adalah closure karena memiliki akses ke variabel `data_buku` yang berada di luar ruang lingkup lokalnya.
+    Penjelasan: Fungsi `ubah_data` adalah closure karena memiliki akses ke variabel `data_buku` yang berada di luar ruang lingkup lokalnya.
 
 18. **Decorations:**
 
-```python
-@tampilkan_dan_kembali
-def daftarbuku():
-    buku_list = tampil_buku()
-    for buku in buku_list:
-        print(buku)
-```
+    ```python
+    @tampilkan_dan_kembali
+    def daftarbuku():
+        buku_list = tampil_buku()
+        for buku in buku_list:
+            print(buku)
+    ```
 
-Penjelasan: `@tampilkan_dan_kembali` digunakan untuk mendekorasi fungsi `daftarbuku`.
+    Penjelasan: `@tampilkan_dan_kembali` digunakan untuk mendekorasi fungsi `daftarbuku`.
 
-Semua kutipan kode di atas bersifat singkat dan dapat diakses untuk penjelasan lebih lanjut.
+    Semua kutipan kode di atas bersifat singkat dan dapat diakses untuk penjelasan lebih lanjut.
