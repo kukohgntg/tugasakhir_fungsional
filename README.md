@@ -1,166 +1,160 @@
-# List Comprehension
+Penjelasan singkat:
 
-```
-def tampil_buku(): return [
-    f"\n{i}. {buku}" for i, buku in enumerate(sorted(baca_data("daftarbuku.txt")), start=1)
-] if os.path.exists("daftarbuku.txt") else ["\n[Data tidak tersedia]"]
+1. **Sequence Type (List, tuple, range):**
 
-```
+   ```python
+   data_buku = baca_data("daftarbuku.txt")
+   buku_list = tampil_buku()
+   ```
 
-Penjelasan: List comprehension digunakan untuk membuat list yang berisi informasi buku. enumerate digunakan untuk mendapatkan indeks dan nilai dalam list.
+   Penjelasan: `data_buku` dan `buku_list` merupakan variabel yang menyimpan data dalam bentuk list.
 
-# Mapping Type (Dictionary)
+2. **Mapping Type (Dictionary):**
 
-```
-aksi_menu = {
-    1: "daftarbuku",
-    2: "caridata",
-    3: "tambahdata",
-    4: "ubahdata",
-    5: "hapusdata",
-    6: "daftarpeminjam",
-    7: "tambahpeminjam",
-    8: "hapuspeminjam",
-    9: lambda: print("\n[Anda telah keluar dari program]"),
-}
+   ```python
+   aksi_menu = {
+       1: "daftarbuku",
+       2: "caridata",
+       # ... (bagian lain dari aksi_menu)
+   }
+   ```
 
-```
+   Penjelasan: `aksi_menu` adalah sebuah dictionary yang melakukan pemetaan antara nomor menu dengan fungsi atau perintah yang sesuai.
 
-Penjelasan: aksi_menu adalah sebuah dictionary yang memetakan angka ke aksi yang sesuai dalam program.
+3. **Variabel pada Python (Casting):**
 
-# Variabel pada Python (Casting)
+   ```python
+   self.index = 0
+   ```
 
-```
-hari, bulan, tahun = map(int, tanggal_str.split('/'))
+   Penjelasan: `self.index` adalah variabel yang digunakan untuk menyimpan nilai indeks, dan inisialisasi dengan nilai 0.
 
-```
+4. **Pure Functions:**
 
-Penjelasan: Menggunakan fungsi map untuk mengonversi string yang didapatkan dari input tanggal ke tipe data integer.
+   ```python
+   def bersihkan_layar():
+       os.system("CLS")
+   ```
 
-# Pure Functions
+   Penjelasan: `bersihkan_layar` adalah fungsi yang hanya melakukan operasi untuk membersihkan layar tanpa memiliki efek samping.
 
-```
-def bersihkan_layar():
-    os.system("CLS")
+5. **Lambda Expressions:**
 
-def baca_data(nama_file):
-    with open(nama_file, "r") as file:
-        return file.readlines()
+   ```python
+   urutkan_berdasarkan_tanggal = lambda tanggal_str: tuple(map(int, tanggal_str.split('/')))
+   ```
 
-def tulis_data(nama_file, data):
-    with open(nama_file, "w") as file:
-        file.writelines(data)
+   Penjelasan: `urutkan_berdasarkan_tanggal` adalah fungsi lambda yang mengonversi format tanggal.
 
-```
+6. **List Comprehension:**
 
-Penjelasan: Fungsi-fungsi ini adalah pure functions karena tidak memiliki efek samping dan mengembalikan nilai berdasarkan input.
+   ```python
+   sorted_buku_list = sorted(buku_iterator._baca_data())
+   ```
 
-# Lambda Expressions
+   Penjelasan: `sorted_buku_list` adalah list yang dibuat dengan menggunakan list comprehension untuk mengurutkan data buku.
 
-```
-def tampilkan_menu(): return (
-    print(" SELAMAT DATANG DI PROGRAM PERPUSTAKAAN"),
-    print("\nPilih daftar menu untuk mengakses program :\n"),
-    print("[1] Lihat Daftar Buku"),
-    print("[2] Cari Buku"),
-    print("[3] Tambah Data Buku"),
-    print("[4] Ubah Data Buku"),
-    print("[5] Hapus Data Buku"),
-    print("[6] Lihat Daftar Peminjam Buku"),
-    print("[7] Tambah Peminjam Buku"),
-    print("[8] Hapus Data Peminjam Buku"),
-    print("[9] Keluar"),
-)
+7. **Iterator:**
 
-```
+   ```python
+   class BukuIterator:
+       def __iter__(self):
+           # ...
+   ```
 
-Penjelasan: Menggunakan lambda expression untuk mendefinisikan fungsi yang mereturn menu tampilan.
+   Penjelasan: `BukuIterator` adalah kelas iterator yang digunakan untuk mengiterasi melalui data buku.
 
-# List Comprehension
+8. **Generator:**
 
-```
-def tampil_buku(): return [
-    f"\n{i}. {buku}" for i, buku in enumerate(sorted(baca_data("daftarbuku.txt")), start=1)
-] if os.path.exists("daftarbuku.txt") else ["\n[Data tidak tersedia]"]
+   ```python
+   def tampil_buku_generator(file_path):
+       buku_iterator = BukuIterator(file_path)
+       sorted_buku_list = sorted(buku_iterator._baca_data())
+       for buku in sorted_buku_list:
+           yield buku
+   ```
 
-```
+   Penjelasan: `tampil_buku_generator` adalah generator yang menghasilkan buku-buku yang diurutkan.
 
-Penjelasan: Menggunakan list comprehension untuk membuat list yang berisi informasi buku.
+9. **Higher Order Function:**
 
-# Iterator Class
+   ```python
+   def tampilkan_dan_kembali(fungsi):
+       def pembungkus(*args, **kwargs):
+           # ...
+       return pembungkus
+   ```
 
-```
-class BukuIterator:
-    # ...
+   Penjelasan: `tampilkan_dan_kembali` adalah fungsi tingkat tinggi yang menerima fungsi lain sebagai argumen dan mengembalikan fungsi baru.
 
-```
+10. **Built-in Higher Order Functions pada python:**
 
-Penjelasan: Membuat kelas iterator BukuIterator untuk mengiterasi data buku.
-
-# Generator
-
-```
-def tampil_buku_generator(file_path):
-    buku_iterator = BukuIterator(file_path)
-    sorted_buku_list = sorted(buku_iterator._baca_data())
-    for buku in sorted_buku_list:
-        yield buku
-
-```
-
-Penjelasan: Menggunakan generator function tampil_buku_generator untuk menghasilkan nilai satu per satu dari buku.
-
-# Higher Order Function
-
-```
-def tampilkan_dan_kembali(fungsi):
-    def pembungkus(*args, **kwargs):
-        hasil = fungsi(*args, **kwargs)
-        print("\nTekan [ENTER] untuk kembali ke menu")
-        input()
-        menu()
-        return hasil
-    return pembungkus
-
-```
-
-Penjelasan: tampilkan_dan_kembali adalah higher order function karena menerima fungsi sebagai argumen dan mengembalikan fungsi lain.
-
-# Built-in Higher Order Functions pada python
-
-```
+```python
 def proses_pilihan_menu(pilihan):
     aksi = pilih_aksi_menu(pilihan)
     if callable(aksi):
         aksi()
     else:
         globals()[aksi]()
-
 ```
 
-Penjelasan: Menggunakan fungsi callable untuk memeriksa apakah sebuah objek dapat dipanggil dan globals() untuk memanggil fungsi dengan nama yang dinamis.
+Penjelasan: `proses_pilihan_menu` menggunakan fungsi tingkat tinggi (`callable`) untuk memproses pilihan menu.
 
-# Map
+11. **Map:**
 
+```python
+peminjam_terurut = sorted(
+    peminjam_data, key=lambda peminjam: urutkan_berdasarkan_tanggal(peminjam.split(',')[2]))
 ```
-hari, bulan, tahun = map(int, tanggal_str.split('/'))
 
-```
+Penjelasan: `sorted` dengan argumen `key` menggunakan fungsi `urutkan_berdasarkan_tanggal` sebagai pemetaan.
 
-Penjelasan: Menggunakan fungsi map untuk mengonversi string menjadi integer pada pemisahan tanggal.
+12. **Filter:**
 
-# Filter data yang sesuai dengan nama dan judul buku
-
-```
+```python
 filtered_data = [hps for hps in peminjam_data if not (hps.startswith(nama) and judul in hps)]
-
 ```
 
-Penjelasan: Menggunakan list comprehension untuk menyaring data peminjam berdasarkan nama dan judul buku.
+Penjelasan: List comprehension digunakan untuk menyaring data peminjam berdasarkan kondisi tertentu.
 
-# Currying Function
+13. **Reduce:**
+    Tidak ada contoh langsung dari fungsi `reduce` pada kode yang diberikan.
 
+14. **Currying:**
+
+```python
+def currying_ubah_data(data_buku):
+    def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
+        # ...
+    return ubah_data
 ```
+
+Penjelasan: `currying_ubah_data` adalah fungsi currying yang menghasilkan fungsi `ubah_data`.
+
+15. **Inner Function:**
+
+```python
+def currying_ubah_data(data_buku):
+    def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
+        # ...
+    return ubah_data
+```
+
+Penjelasan: `ubah_data` adalah fungsi inner yang didefinisikan di dalam fungsi `currying_ubah_data`.
+
+16. **Ruang Lingkup Variabel:**
+
+```python
+def urutkan_berdasarkan_tanggal(tanggal_str):
+    hari, bulan, tahun = map(int, tanggal_str.split('/'))
+    return tahun, bulan, hari
+```
+
+Penjelasan: Variabel `hari`, `bulan`, dan `tahun` di dalam fungsi memiliki ruang lingkup lokal.
+
+17. **Closure:**
+
+```python
 def currying_ubah_data(data_buku):
     def ubah_data(judul, judul_baru, penulis_baru, tahun_baru):
         nonlocal data_buku
@@ -168,41 +162,21 @@ def currying_ubah_data(data_buku):
             data, judul, judul_baru, penulis_baru, tahun_baru) for data in data_buku]
         tulis_data("daftarbuku.txt", data_buku)
         print("\n[Data Buku Berhasil Diubah]")
-
     return ubah_data
-
 ```
 
-Penjelasan: currying_ubah_data adalah sebuah fungsi yang mengembalikan fungsi lain (ubah_data). Currying memungkinkan penggunaan sebagian argumen dan memberikan fungsi yang baru yang mengharapkan sisa argumen.
+Penjelasan: Fungsi `ubah_data` adalah closure karena memiliki akses ke variabel `data_buku` yang berada di luar ruang lingkup lokalnya.
 
-# Inner Function
+18. **Decorations:**
 
-```
-def perbarui_data_buku(data_buku, judul, judul_baru, penulis_baru, tahun_baru):
-    return ",".join([judul_baru, penulis_baru, tahun_baru + "\n"]) if data_buku.startswith(judul) else data_buku
-
-```
-
-Penjelasan: perbarui_data_buku adalah fungsi dalam fungsi lain (ubah_data).
-
-# Closure
-
-```
-def urutkan_berdasarkan_tanggal(tanggal_str):
-    hari, bulan, tahun = map(int, tanggal_str.split('/'))
-    return tahun, bulan, hari
-
-```
-
-Penjelasan: Fungsi urutkan_berdasarkan_tanggal adalah contoh dari closure karena menggunakan variabel dari lingkup luar (tanggal_str).
-
-# Decorators
-
-```
+```python
 @tampilkan_dan_kembali
 def daftarbuku():
-    # ...
-
+    buku_list = tampil_buku()
+    for buku in buku_list:
+        print(buku)
 ```
 
-Penjelasan: Menggunakan decorator tampilkan_dan_kembali untuk mengubah perilaku fungsi daftarbuku.
+Penjelasan: `@tampilkan_dan_kembali` digunakan untuk mendekorasi fungsi `daftarbuku`.
+
+Semua kutipan kode di atas bersifat singkat dan dapat diakses untuk penjelasan lebih lanjut.
